@@ -102,8 +102,6 @@ class Televizor
 	{
 		this->diagonala = 3.5;
 		this->smart = 0;
-		if (this->model != nullptr)
-			delete[]this->model;
 		this->model = new char[strlen("Y" + 1)];
 		strcpy_s(this->model, strlen("Y") + 1, "Y");
 		this->pret = 300;
