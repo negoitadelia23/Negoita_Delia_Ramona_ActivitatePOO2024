@@ -350,6 +350,7 @@ public:
 		out << "Este smart= " << (tv.smart ? "DA" : "NU") << endl;
 		out << "Model= " << tv.model << endl;
 		out << "Pret= " << tv.pret << endl;
+		return out;
 	}
 	~Televizor()
 	{
