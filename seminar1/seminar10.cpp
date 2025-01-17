@@ -252,23 +252,25 @@ public:
 		fisier.write((char*)(marca.c_str()), sizeof(char) * lungime);
 		fisier.write((char*)&pret, sizeof(float));
 	}
-	//void citesteFisiereBinar(fstream& fisier) {
-	//	fisier.read((char*)&nrRoti, sizeof(int));
-	//	for (int i = 0; i < nrRoti; i++)
-	//	{
-	//		int lungime = 0;
-	//		fisier.read((char*)&lungime, sizeof(int));
-	//		char buffer[50];
-	//		for (int j = 0; j < lungime; j++)
-	//			fisier.read((char*)&buffer, sizeof(char));
-	//		this->producatori[i] = (string)buffer;
-	//	}
-	//
-	//	int lungime = 0;
-	//	fisier.read((char*)&lungime, sizeof(int));
-	//	fisier.read((char*)(marca.c_str()), sizeof(char) * lungime);
-	//	fisier.read((char*)&pret, sizeof(float));
-	//}
+	void citesteFisierBinar(fstream& fisier) {
+		fisier.read((char*)&nrRoti, sizeof(int));
+		if (this->producatori) {
+			delete[]this->producatori;
+		}
+		this->producatori = new string[nrRoti];
+		for (int i = 0; i < nrRoti; i++) {
+			int lungime = 0;
+			fisier.read((char*)&lungime, sizeof(int));
+			char buffer[50];
+			fisier.read((char*)(&buffer), lungime * sizeof(char));
+			buffer[lungime] = '\0';
+			this->producatori[i] = buffer;
+		}
+		int lungime = 0;
+		fisier.read((char*)&lungime, sizeof(int));
+		fisier.read((char*)(marca.c_str()), lungime * sizeof(char));
+		fisier.read((char*)&pret, sizeof(float));
+	}
 
 };
 
@@ -377,22 +379,23 @@ public:
 
 
 int main() {
-	//int nr_Roti = 4;
-	//string* prod = new string[nr_Roti];
-	//prod[0] = "Michelin";
-	//prod[1] = "Hankook";
-	//prod[2] = "Bridgestone";
-	//prod[3] = "Pirelli";
-	//Masina masina(nr_Roti, "Dacia", 50000.0f, 2021);
-	//masina.setNrRoti(nr_Roti, prod);
-	//fstream fisierBinar("fisierbinar.txt", ios::binary | ios::out);
-	//masina.scriereFisiereBinar(fisierBinar);// e prieten ff bun cu istream&, ostream&, ifstream& si ofstream&
-	//fisierBinar.close();
-	//return 0;
-	//fstream fisierbinar("fisierBinar.txt", ios::binary | ios::in);
-	//Masina masina1;
-	//masina1.citesteFisiereBinar(fisierbinar);
-	//cout << masina1 << endl;
-	//fisierbinar.close();
+	int nr_Roti = 4;
+	string* prod = new string[nr_Roti];
+	prod[0] = "Michelin";
+	prod[1] = "Hankook";
+	prod[2] = "Bridgestone";
+	prod[3] = "Pirelli";
+	Masina masina(nr_Roti, "Dacia", 50000.0f, 2021);
+	masina.setNrRoti(nr_Roti, prod);
+	fstream fisierBinar("fisierbinar.txt", ios::binary | ios::out);
+	masina.scriereFisiereBinar(fisierBinar);// e prieten ff bun cu istream&, ostream&, ifstream& si ofstream&
+	fisierBinar.close();
+	return 0;
+	fstream fisierbinar("fisierBinar.txt", ios::binary | ios::in);
+	Masina masina1;
+	masina1.citesteFisierBinar(fisierbinar);
+	cout << masina1 << endl;
+	fisierbinar.close();
+	fisierBinar.close();
 	return 0;
 }

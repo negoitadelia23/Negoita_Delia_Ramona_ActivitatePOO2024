@@ -11,7 +11,7 @@ public:
 	{
 		this->marca = 1234;
 		this->nume = "No name";
-		this->salariu = 4934.45;
+		this->salariu = 4934.450f;
 	}
 	Angajat(int marca, string nume, float salariu)
 	{
